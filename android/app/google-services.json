@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "989084027493",
+    "project_id": "library-system-for-stude-57f98",
+    "storage_bucket": "library-system-for-stude-57f98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989084027493:android:447127c4deceffa045d48c",
+        "android_client_info": {
+          "package_name": "com.pamod.Library_Management_Tool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989084027493-3kandodubbcnoa1vkspdu02otal2jmhd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC98THPH_xmik1JyTV1yWug_9TDpOb3raM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989084027493-3kandodubbcnoa1vkspdu02otal2jmhd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
