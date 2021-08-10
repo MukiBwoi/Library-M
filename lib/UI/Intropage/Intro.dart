@@ -1,6 +1,6 @@
 import 'dart:async';
-import '../WhoAreYou.dart/WhoAreYou.dart';
 import 'package:flutter/material.dart';
+import 'package:new_app/Authentication_wrapper.dart';
 import 'Widgets.dart';
 
 class IntroPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class _IntroPageState extends State<IntroPage> {
 
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => WhoAreYou()));
+        context, MaterialPageRoute(builder: (context) => Wrapper()));
   }
 
   @override
