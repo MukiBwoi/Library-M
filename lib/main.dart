@@ -22,9 +22,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'LMS',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-          textTheme: GoogleFonts.ubuntuTextTheme(Theme.of(context).textTheme),
-        ),
+            textTheme: GoogleFonts.ubuntuTextTheme(Theme.of(context).textTheme),
+            primarySwatch: Colors.orange),
         home: IntroPage(),
       ),
     );

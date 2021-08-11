@@ -2,26 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:new_app/Service/auth.dart';
 import 'package:new_app/UI/Homepage/AdminHome.dart';
 import 'package:new_app/UI/Homepage/UserHome.dart';
-
+import 'package:new_app/UI/Login/Loading.dart';
 
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
-final formKey = GlobalKey<FormState>();
-
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+  TextStyle style = TextStyle(fontSize: 20.0);
+  final AuthService _auth = AuthService();
+  bool loading = false;
 
-TextStyle style = TextStyle(fontSize: 20.0);
-final AuthService _auth = AuthService();
-TextEditingController email = TextEditingController();
-TextEditingController password = TextEditingController();
-
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading?Loading():Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -44,7 +43,7 @@ TextEditingController password = TextEditingController();
                     ],
                   ),
                   child: Form(
-                    key: formKey,
+                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +57,7 @@ TextEditingController password = TextEditingController();
                         ),
                         SizedBox(height: 45.0),
 
-                        // email field 
+                        // email field
                         TextFormField(
                           controller: email,
                           obscureText: false,
@@ -101,8 +100,6 @@ TextEditingController password = TextEditingController();
                           },
                         ),
                         //end of email
-
-
 
                         SizedBox(height: 25.0),
                         //password field
@@ -149,7 +146,6 @@ TextEditingController password = TextEditingController();
                         ),
                         //end of password field
 
-
                         SizedBox(
                           height: 35.0,
                         ),
@@ -163,7 +159,10 @@ TextEditingController password = TextEditingController();
                             padding:
                                 EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                             onPressed: () async {
-                              if (formKey.currentState.validate()) {
+                              if (_formKey.currentState.validate()) {
+                                setState(() {
+                                  loading = true;
+                                });
                                 dynamic result =
                                     await _auth.signInWithEmailAndPassword(
                                         email.text, password.text);
@@ -173,6 +172,7 @@ TextEditingController password = TextEditingController();
                                         content:
                                             Text('Enter Valid Credentials')),
                                   );
+                                  loading = false;
                                 } else if (result.uid ==
                                     "uikXGaISbvRMFN8b3cI7xSFtXff1") {
                                   return AdminHome();
@@ -190,8 +190,6 @@ TextEditingController password = TextEditingController();
                         ),
                         //end of login button
 
-
-                        
                         SizedBox(
                           height: 15.0,
                         ),
