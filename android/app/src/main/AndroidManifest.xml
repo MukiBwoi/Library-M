@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pamod.Library_Management_Tool">
    <application
-        android:label="new_app"
+        android:label="Library Management System"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

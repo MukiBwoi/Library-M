@@ -41,6 +41,9 @@ class _IntroPageState extends State<IntroPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   logo(_height, _width),
+                  SizedBox(
+                    width: _width / 11,
+                  ),
                   appname(_height, _width),
                 ],
               ),
@@ -49,7 +52,8 @@ class _IntroPageState extends State<IntroPage> {
               height: _height / 8,
             ),
             CircularProgressIndicator(
-              backgroundColor: Colors.amber,
+              backgroundColor: Color(0xffff5722),
+              color: Colors.orange,
             )
           ],
         ),

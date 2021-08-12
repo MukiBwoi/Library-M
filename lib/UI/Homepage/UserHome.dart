@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_app/Service/auth.dart';
 import 'package:new_app/UI/Homepage/widgets/Appbar.dart';
+import 'package:new_app/UI/Homepage/widgets/Snackbar.dart';
+import 'package:new_app/UI/Homepage/widgets/addForm.dart';
+
 import 'package:new_app/UI/Login/Loading.dart';
 
 class UserHome extends StatefulWidget {
@@ -13,6 +16,7 @@ class _UserHomeState extends State<UserHome> {
   final AuthService _auth = AuthService();
   void _route() async {
     await _auth.signOut();
+    showSnack(context, "You are signed out");
   }
 
   @override
@@ -31,12 +35,14 @@ class _UserHomeState extends State<UserHome> {
             }
 
             return ListView(
+              reverse: true,
               physics: BouncingScrollPhysics(),
               children: snapshot.data.docs.map((document) {
                 return Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      whiteSpace(20),
                       Container(
                         padding: const EdgeInsets.all(15),
                         width: _width * 0.9,
@@ -58,7 +64,7 @@ class _UserHomeState extends State<UserHome> {
                           children: [
                             Expanded(
                               child: Text(
-                                document['Book_Name'],
+                                document['Book_Name'].toUpperCase(),
                                 style: TextStyle(fontSize: 30),
                               ),
                             ),
@@ -79,6 +85,7 @@ class _UserHomeState extends State<UserHome> {
                           ],
                         ),
                       ),
+                      whiteSpace(40)
                     ],
                   ),
                 );

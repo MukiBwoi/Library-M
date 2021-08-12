@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class DatabaseService {
   Map student;
 
   //Create Data
-  addData(String Book_Name, String Rack_No, String Std_Name) {
+  addData(String bName, String rNo, String stdName) {
     Map<String, dynamic> demoData = {
-      "Book_Name": Book_Name,
-      "Std_Name": Std_Name,
-      "Rack_No": Rack_No,
+      "Book_Name": bName,
+      "Std_Name": stdName,
+      "Rack_No": rNo,
     };
 
     //collection reference
