@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_app/Service/auth.dart';
+import 'package:new_app/Service/database.dart';
 import 'package:new_app/UI/Homepage/widgets/Appbar.dart';
 import 'package:new_app/UI/Homepage/widgets/floatingactionbutton.dart';
+import 'package:new_app/UI/Homepage/widgets/updateForm.dart';
+import 'package:new_app/UI/Login/Loading.dart';
 
 class AdminHome extends StatefulWidget {
   @override
@@ -17,22 +21,25 @@ class _AdminHomeState extends State<AdminHome> {
 
   @override
   Widget build(BuildContext context) {
-    final dynamic _height = MediaQuery.of(context).size.height;
     final dynamic _width = MediaQuery.of(context).size.width;
 
     return Scaffold(
         floatingActionButton: FloatingButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        appBar: customAppBar(_route),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 40,
-                ),
-                Container(
+        appBar: customAppBar(_route, "Admin Panel"),
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('student').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: Loading(),
+              );
+            }
+            return ListView(
+              physics: BouncingScrollPhysics(),
+              children: snapshot.data.docs.map((document) {
+                return Container(
                   padding: const EdgeInsets.all(15),
                   height: 300,
                   width: _width * 0.9,
@@ -47,68 +54,73 @@ class _AdminHomeState extends State<AdminHome> {
                       ),
                     ],
                   ),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Image(
-                          image: NetworkImage(
-                              "https://m.media-amazon.com/images/I/51m2ovYhjTL.jpg"),
+                        child: Text(
+                          document['Book_Name'],
+                          style: TextStyle(fontSize: 30),
                         ),
                       ),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Book Cover",
-                                style: TextStyle(fontSize: 30),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Student Name : \nMuksith",
-                                style: TextStyle(fontSize: 18),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Rack No : \n005",
-                                style: TextStyle(fontSize: 18),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            ButtonBar(
-                              alignment: MainAxisAlignment.center,
-                              children: [
-                                MaterialButton(
-                                  color: Color(0xff00c853),
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Update",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                                MaterialButton(
-                                  color: Color(0xffd32f2f),
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Delete",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                        child: Text(
+                          "Student Name : \n" + document['Std_Name'],
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
                         ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Rack No : \n" + document['Rack_No'],
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      ButtonBar(
+                        alignment: MainAxisAlignment.center,
+                        children: [
+                          MaterialButton(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 50),
+                            color: Color(0xff00c853),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UpdateForm(
+                                      id: document.id,
+                                      oldBName: document['Book_Name'],
+                                      oldRNo: document['Rack_No'],
+                                      oldSName: document['Std_Name'],
+                                    ),
+                                  ));
+                            },
+                            child: Text(
+                              "Update",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          MaterialButton(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 50),
+                            color: Color(0xffd32f2f),
+                            onPressed: () async {
+                              await DatabaseService().deleteItem(document.id);
+                            },
+                            child: Text(
+                              "Delete",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ),
+                );
+              }).toList(),
+            );
+          },
         ));
   }
 }

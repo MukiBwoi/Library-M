@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
-AppBar customAppBar(dynamic route) {
+AppBar customAppBar(dynamic route, String title) {
   return AppBar(
     leading: Icon(
       Icons.home,
       color: Colors.white,
     ),
+    title: Text(
+      title,
+      style: TextStyle(color: Colors.white),
+    ),
+    centerTitle: true,
     backgroundColor: Color(0xffff5722),
     actions: [
       MaterialButton(
@@ -30,5 +35,3 @@ AppBar customAppBar(dynamic route) {
     ],
   );
 }
-
-
