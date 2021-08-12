@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_app/Service/auth.dart';
 import 'package:new_app/UI/Homepage/AdminHome.dart';
 import 'package:new_app/UI/Homepage/UserHome.dart';
+import 'package:new_app/UI/Homepage/widgets/Snackbar.dart';
 import 'package:new_app/UI/Login/Loading.dart';
 
 class Login extends StatefulWidget {
@@ -170,13 +171,11 @@ class _LoginState extends State<Login> {
                                           .signInWithEmailAndPassword(
                                               email.text, password.text);
                                       if (result == null) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                              content: Text(
-                                                  'Enter Valid Credentials')),
-                                        );
-                                        loading = false;
+                                        showSnack(
+                                            context, "Enter Valid Credentials");
+                                        setState(() {
+                                          loading = false;
+                                        });
                                       } else if (result.uid ==
                                           "uikXGaISbvRMFN8b3cI7xSFtXff1") {
                                         return AdminHome();

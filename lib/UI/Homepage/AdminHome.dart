@@ -18,6 +18,7 @@ class _AdminHomeState extends State<AdminHome> {
 
   void _route() async {
     await _auth.signOut();
+    showSnack(context, "You are signed out");
   }
 
   @override
@@ -110,9 +111,8 @@ class _AdminHomeState extends State<AdminHome> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 15, horizontal: 50),
                                 color: Color(0xffd32f2f),
-                                onPressed: () async {
-                                  await DatabaseService()
-                                      .deleteItem(document.id);
+                                onPressed: () {
+                                  DatabaseService().deleteItem(document.id);
                                   showSnack(
                                       context, "Item Deleted Successfully");
                                 },

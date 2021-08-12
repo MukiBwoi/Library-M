@@ -24,7 +24,7 @@ class DatabaseService {
 
     await documentReferencer
         .delete()
-        .whenComplete(() => print('Note item deleted from the database'))
+        .whenComplete(() => print('Deleted'))
         .catchError((e) => print(e));
   }
 
